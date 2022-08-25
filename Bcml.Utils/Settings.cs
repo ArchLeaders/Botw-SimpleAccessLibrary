@@ -46,7 +46,7 @@ namespace Bcml.Utils
 
         public Settings()
         {
-            var bytes = File.ReadAllBytes($"{Environment.GetEnvironmentVariable("LOCALAPPDATA")}\\bcml");
+            var bytes = File.ReadAllBytes($"{Environment.GetEnvironmentVariable("LOCALAPPDATA")}\\bcml\\settings.json");
             Data = JsonSerializer.Deserialize<Dictionary<string, object?>>(bytes);
         }
     }
