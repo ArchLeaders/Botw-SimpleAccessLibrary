@@ -25,7 +25,7 @@ namespace Bcml.Utils
         /// <c>show_gb</c><br/>
         /// <c>dark_theme</c><br/>
         /// </summary>
-        public bool? GetBool(string name) => Data != null ? Data![name].GetBoolean() : false;
+        public bool? GetBool(string name) => Data != null && Data![name].GetBoolean();
 
         /// <summary>
         /// <para>Params as of 3.9.24</para>
