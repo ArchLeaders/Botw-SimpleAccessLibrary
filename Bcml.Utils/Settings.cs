@@ -4,7 +4,7 @@ namespace Bcml.Utils
 {
     public class Settings
     {
-        public Dictionary<string, object?>? Data { get; }
+        public Dictionary<string, JsonElement>? Data { get; }
 
         /// <summary>
         /// <para>Params as of 3.9.24</para>
@@ -25,7 +25,7 @@ namespace Bcml.Utils
         /// <c>show_gb</c><br/>
         /// <c>dark_theme</c><br/>
         /// </summary>
-        public bool? GetBool(string name) => Data != null ? (Data![name] as bool?) : false;
+        public bool? GetBool(string name) => Data != null ? Data![name].GetBoolean() : false;
 
         /// <summary>
         /// <para>Params as of 3.9.24</para>
@@ -42,12 +42,12 @@ namespace Bcml.Utils
         /// <c>site_meta</c><br/>
         /// <c>last_version</c><br/>
         /// </summary>
-        public string? GetString(string name) => Data != null ? (Data![name] as string) : null;
+        public string? GetString(string name) => Data != null ? Data![name].GetString() : null;
 
         public Settings()
         {
             var bytes = File.ReadAllBytes($"{Environment.GetEnvironmentVariable("LOCALAPPDATA")}\\bcml\\settings.json");
-            Data = JsonSerializer.Deserialize<Dictionary<string, object?>>(bytes);
+            Data = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(bytes);
         }
     }
 }
