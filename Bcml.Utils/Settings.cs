@@ -4,7 +4,7 @@ namespace Bcml.Utils
 {
     public class Settings
     {
-        public Dictionary<string, JsonElement>? Data { get; }
+        public Dictionary<string, JsonElement> Data { get; }
 
         /// <summary>
         /// <para>Params as of 3.9.24</para>
@@ -25,7 +25,7 @@ namespace Bcml.Utils
         /// <c>show_gb</c><br/>
         /// <c>dark_theme</c><br/>
         /// </summary>
-        public bool? GetBool(string name) => Data != null && Data![name].GetBoolean();
+        public bool GetBool(string name) => Data != null && Data![name].GetBoolean();
 
         /// <summary>
         /// <para>Params as of 3.9.24</para>
@@ -44,10 +44,14 @@ namespace Bcml.Utils
         /// </summary>
         public string? GetString(string name) => Data != null ? Data![name].GetString() : null;
 
+        public string? GetBase() => GetBool("wiiu") ? GetString("game_dir") : GetString("game_dir_nx");
+        public string? GetUpdate() => GetBool("wiiu") ? GetString("update_dir") : GetString("game_dir_nx");
+        public string? GetDlc() => GetBool("wiiu") ? GetString("dlc_dir") : GetString("dlc_dir_nx");
+
         public Settings()
         {
             var bytes = File.ReadAllBytes($"{Environment.GetEnvironmentVariable("LOCALAPPDATA")}\\bcml\\settings.json");
-            Data = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(bytes);
+            Data = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(bytes) ?? new();
         }
     }
 }
